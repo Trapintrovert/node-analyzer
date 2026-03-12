@@ -1,143 +1,79 @@
-# NodeJS Application Analyzer
+# nodejs-app-analyzer
 
-A comprehensive CLI tool to analyze the performance, security, code quality, and **scaling readiness** of your NodeJS applications. Built with TypeScript, bundled with tsup.
+[![npm version](https://img.shields.io/npm/v/nodejs-app-analyzer.svg)](https://www.npmjs.com/package/nodejs-app-analyzer)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Features
+A comprehensive CLI tool that analyzes NodeJS applications across **five categories** — security, performance, code quality, dependencies, and scaling readiness — and gives you an actionable score with prioritized recommendations.
 
-- **Security Analysis**: Scan for vulnerabilities, exposed secrets, and insecure coding patterns
-- **Performance Analysis**: Check bundle size, dependency weight, async patterns, and memory leak risks
-- **Code Quality Analysis**: Measure complexity, test coverage, lint issues, and code smells
-- **Dependency Analysis**: Identify outdated packages, circular dependencies, and unused modules
-- **Scaling Analysis**: Detect infrastructure bottlenecks, predict load capacity, get actionable scaling recommendations
+## Installation
 
----
+```bash
+# Install globally
+npm install -g nodejs-app-analyzer
+
+# Or run directly with npx
+npx nodejs-app-analyzer /path/to/your/project
+```
 
 ## Quick Start
 
 ```bash
-# 1. Install dependencies
-npm install
+# Analyze the current directory
+node-analyze
 
-# 2. Build
-npm run build
+# Analyze a specific project
+node-analyze /path/to/your/project
 
-# 3. Analyze a project
-npm start                              # analyze current directory
-node dist/cli.js /path/to/your/project # analyze a specific project
+# Save report to a file
+node-analyze ./my-app -o report.json
+
+# Set a minimum passing score
+node-analyze ./my-app --threshold 80
 ```
 
-See `GETTING_STARTED.md` for detailed setup instructions.
+## Features
 
----
+- **Security Analysis** — Vulnerability scanning, secret detection, insecure pattern identification
+- **Performance Analysis** — Bundle size, memory leak risks, async patterns, blocking operations
+- **Code Quality** — Cyclomatic complexity, test coverage estimation, ESLint detection, code smells
+- **Dependency Analysis** — Outdated packages, circular dependencies, unused modules
+- **Scaling Readiness** — Infrastructure bottlenecks, database optimization, API scalability, load projections
 
 ## Usage
 
-### Basic Usage
-
 ```bash
-# Analyze the current directory
-npm start
-
-# Analyze a specific project
-node dist/cli.js /path/to/your/project
-
-# Save report to custom file
-node dist/cli.js ./my-app -o my-analysis.json
+node-analyze [project-path] [options]
 ```
 
 ### Options
 
-```bash
-node dist/cli.js [project-path] [options]
-
-Options:
-  -o, --output <file>      Output report file (default: "analysis-report.json")
-  --no-performance         Skip performance analysis
-  --no-security            Skip security analysis
-  --no-quality             Skip code quality analysis
-  --no-scaling             Skip scaling analysis
-  --threshold <score>      Minimum passing score 0-100 (default: "70")
-  -h, --help               Display help for command
-```
+| Option | Description | Default |
+|---|---|---|
+| `-o, --output <file>` | Output report file | `analysis-report.json` |
+| `--no-performance` | Skip performance analysis | |
+| `--no-security` | Skip security analysis | |
+| `--no-quality` | Skip code quality analysis | |
+| `--no-scaling` | Skip scaling analysis | |
+| `--threshold <score>` | Minimum passing score (0-100) | `70` |
+| `-h, --help` | Display help | |
 
 ### Examples
 
 ```bash
-# Skip performance analysis
-node dist/cli.js ./my-app --no-performance
+# Full analysis with strict threshold
+node-analyze ./my-app --threshold 85
 
-# Set custom threshold
-node dist/cli.js ./my-app --threshold 80
+# Security-only scan
+node-analyze ./my-app --no-performance --no-quality --no-scaling
 
-# Security-focused scan
-node dist/cli.js ./my-app --no-performance --no-quality -o security-report.json
+# Skip slow analyses for quick feedback
+node-analyze ./my-app --no-scaling --no-performance
+
+# Custom report output
+node-analyze ./my-app -o reports/audit-$(date +%Y%m%d).json
 ```
 
----
-
-## Development
-
-### Tech Stack
-
-- **Language**: TypeScript
-- **Build**: tsup (esbuild-based bundler)
-- **Testing**: Jest with ts-jest
-- **Linting**: ESLint with @typescript-eslint
-
-### Scripts
-
-```bash
-npm run build      # Build with tsup → dist/
-npm start          # Run the analyzer
-npm test           # Run test suite (81 tests)
-npm run lint       # Lint source files
-npm run lint:fix   # Lint and auto-fix
-npm run dev        # Build and run in one step
-```
-
-### Project Structure
-
-```
-nodejs-analyzer/
-├── src/                          # TypeScript source
-│   ├── cli.ts                    # CLI entry point
-│   ├── analyzer.ts               # Main orchestrator
-│   ├── report-generator.ts       # Report formatting
-│   ├── types.ts                  # Shared type definitions
-│   ├── globals.d.ts              # Module declarations
-│   ├── __tests__/                # Test suite
-│   │   ├── analyzer.test.ts
-│   │   ├── dependency-analyzer.test.ts
-│   │   ├── quality-analyzer.test.ts
-│   │   ├── security-analyzer.test.ts
-│   │   ├── performance-analyzer.test.ts
-│   │   └── report-generator.test.ts
-│   └── analyzers/                # Individual analyzers
-│       ├── dependency-analyzer.ts
-│       ├── security-analyzer.ts
-│       ├── quality-analyzer.ts
-│       ├── performance-analyzer.ts
-│       ├── scaling-analyzer.ts
-│       └── scaling-examples.ts   # Scaling code examples
-├── dist/                         # Compiled output (after build)
-├── docs/                         # Documentation
-├── examples/                     # Sample project for testing
-├── tsconfig.json                 # TypeScript configuration
-├── tsup.config.ts                # tsup bundler configuration
-├── jest.config.js                # Jest test configuration
-├── .eslintrc.json                # ESLint configuration
-└── package.json
-```
-
----
-
-## Output
-
-The analyzer generates:
-1. **Console Report**: Formatted output with scores, findings, and recommendations
-2. **JSON Report**: Detailed analysis saved to the specified output file
-
-### Sample Console Output
+## Sample Output
 
 ```
 🔍 NodeJS Application Analyzer
@@ -157,93 +93,149 @@ Overall Score: 73/100
 ║ Performance       │ 83    │ ✓ Pass    ║
 ║ Scaling Readiness │ 80    │ ✓ Pass    ║
 ╚═══════════════════╧═══════╧═══════════╝
-```
 
----
+💡 Recommendations
+
+  🚨 Critical:
+     • Found 2 potential secrets in code. Use environment variables.
+
+  ⚠️  High Priority:
+     • 12 potential memory leak risks detected.
+
+  📌 Medium Priority:
+     • 3 files have high complexity. Consider refactoring.
+     • No ESLint configuration found. Add linting.
+
+  💭 Low Priority:
+     • 5 potentially unused dependencies found.
+
+✅ Analysis passed! Score: 73/100
+```
 
 ## Scoring System
 
 Each category is scored from 0-100:
-- **80-100**: Pass (Green)
-- **60-79**: Warning (Yellow)
-- **0-59**: Fail (Red)
+
+| Score | Status | Color |
+|---|---|---|
+| 80-100 | Pass | Green |
+| 60-79 | Warning | Yellow |
+| 0-59 | Fail | Red |
 
 Overall score is a weighted average:
-- Security: 25%
-- Dependencies: 20%
-- Code Quality: 20%
-- Performance: 20%
-- Scaling: 15%
 
----
+| Category | Weight |
+|---|---|
+| Security | 25% |
+| Dependencies | 20% |
+| Code Quality | 20% |
+| Performance | 20% |
+| Scaling | 15% |
 
 ## What It Analyzes
 
 ### Security
-- Dependency vulnerabilities (npm audit)
-- Hardcoded secrets (API keys, passwords, tokens)
-- Insecure patterns (eval, SQL injection risks)
+- Dependency vulnerabilities via `npm audit`
+- Hardcoded secrets (API keys, passwords, JWT tokens, database URLs)
+- Insecure patterns (`eval()`, SQL concatenation, `child_process.exec`)
 
 ### Performance
-- Bundle size analysis
-- Heavy dependency detection
-- Async/await vs callback patterns
-- Memory leak risks
-- Blocking operations
+- Total bundle size and large file detection
+- Heavy dependency identification (moment, lodash, etc.)
+- Async/await vs callback pattern usage
+- Memory leak risks (global variables, unclosed listeners, large closures)
+- Synchronous blocking operations inside loops
 
 ### Code Quality
-- Cyclomatic complexity
-- Test coverage estimation
-- ESLint configuration detection
-- Code smells (large files, debug statements)
+- Cyclomatic complexity per file
+- Test file detection and coverage estimation
+- ESLint configuration presence
+- Code smells (oversized files, excessive debug statements)
 
 ### Dependencies
-- Outdated packages
-- Circular dependencies
-- Unused dependencies
+- Outdated packages with severity classification
+- Circular dependency detection
+- Unused dependency identification
 
 ### Scaling Readiness
-- Infrastructure setup (clustering, load balancing)
-- Application bottlenecks (sync operations, CPU-intensive tasks)
+- Infrastructure analysis (clustering, Docker, Kubernetes)
+- Application bottlenecks (sync I/O, CPU-intensive operations)
 - Database optimization (N+1 queries, connection pooling)
 - API scalability (rate limiting, caching, compression)
-- Concurrency patterns (job queues, worker threads)
-- Load projections (when to scale for 2x, 5x, 10x growth)
-
----
+- Concurrency patterns (Promise.all, worker threads, job queues)
+- Load projections for 2x, 5x, 10x traffic growth
 
 ## CI/CD Integration
 
-Use as a quality gate in your CI/CD:
+Use as a quality gate in your pipeline. The analyzer exits with code 1 if the score is below the threshold.
+
+### GitHub Actions
 
 ```yaml
-# GitHub Actions example
-- name: Analyze Code
-  run: |
-    npm install
-    npm run build
-    node dist/cli.js --threshold 70
+- name: Analyze Code Quality
+  run: npx nodejs-app-analyzer --threshold 70
 ```
 
-The analyzer exits with code 1 if the score is below the threshold.
+### GitLab CI
 
----
+```yaml
+code-analysis:
+  script:
+    - npx nodejs-app-analyzer --threshold 70
+```
 
-## Documentation
+### Pre-commit Hook
 
-- **`GETTING_STARTED.md`** - Installation and first steps
-- **`PROJECT_STRUCTURE.md`** - Detailed project layout
-- **`USAGE_EXAMPLES.sh`** - Command-line examples
-- **`docs/SCALING_ANALYZER_GUIDE.md`** - Complete guide to scaling analysis
-- **`docs/ENTERPRISE_ROADMAP.md`** - Enterprise features roadmap
-- **`examples/README.md`** - Sample project for testing
+```bash
+# In package.json scripts
+"precommit": "npx nodejs-app-analyzer --threshold 75"
+```
 
----
+## Output
+
+The analyzer produces two outputs:
+
+1. **Console Report** — Color-coded tables with scores, findings, and prioritized recommendations
+2. **JSON Report** — Complete machine-readable analysis saved to `analysis-report.json` (or custom path via `-o`)
+
+```json
+{
+  "projectPath": "/path/to/project",
+  "timestamp": "2026-03-12T...",
+  "overallScore": 73,
+  "dependencies": { "score": 93, "outdated": [...], "unused": [...] },
+  "security": { "score": 82, "vulnerabilities": {...}, "secretsFound": [...] },
+  "quality": { "score": 77, "complexity": {...}, "codeSmells": [...] },
+  "performance": { "score": 83, "bundleSize": {...}, "memoryLeakRisks": [...] },
+  "scaling": { "score": 80, "bottlenecks": [...], "scalingPlan": {...} },
+  "recommendations": [...]
+}
+```
 
 ## Requirements
 
-- Node.js 18+
-- npm
+- Node.js >= 18
+- The target project must have a `package.json`
+
+## Contributing
+
+```bash
+# Clone the repo
+git clone https://github.com/your-username/nodejs-app-analyzer.git
+cd nodejs-app-analyzer
+
+# Install dependencies
+npm install
+
+# Build
+npm run build
+
+# Run tests (81 tests)
+npm test
+
+# Lint
+npm run lint
+```
 
 ## License
 

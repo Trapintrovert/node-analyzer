@@ -6,23 +6,35 @@
   "bin": {
     "node-analyze": "./dist/cli.js"
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsup",
     "start": "node dist/cli.js",
     "dev": "tsup && node dist/cli.js",
     "test": "jest",
     "lint": "eslint 'src/**/*.ts'",
-    "lint:fix": "eslint 'src/**/*.ts' --fix"
+    "lint:fix": "eslint 'src/**/*.ts' --fix",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "nodejs",
     "analyzer",
     "security",
     "performance",
-    "quality"
+    "quality",
+    "scaling",
+    "code-quality",
+    "static-analysis",
+    "cli"
   ],
   "author": "",
   "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "chalk": "^4.1.2",
     "commander": "^11.0.0",
