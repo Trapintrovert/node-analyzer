@@ -1,9 +1,10 @@
 {
   "name": "nodejs-app-analyzer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Comprehensive NodeJS application performance, security, and quality analyzer",
   "main": "dist/cli.js",
   "bin": {
+    "nodejs-app-analyzer": "./dist/cli.js",
     "node-analyze": "./dist/cli.js"
   },
   "files": [
