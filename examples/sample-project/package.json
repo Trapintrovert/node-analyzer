@@ -1,0 +1,21 @@
+{
+  "name": "sample-problematic-app",
+  "version": "1.0.0",
+  "description": "Sample NodeJS app with various issues for testing the analyzer",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": ["example", "test"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "4.17.1",
+    "body-parser": "1.19.0",
+    "lodash": "4.17.20"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.7"
+  }
+}

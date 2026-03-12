@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeJS Analyzer Pipeline Flow</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+        svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .legend {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .legend h3 {
+            margin-top: 0;
+            color: #2d3748;
+        }
+        .legend-item {
+            display: inline-block;
+            margin: 10px 20px 10px 0;
+        }
+        .legend-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            vertical-align: middle;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 NodeJS Application Analyzer - Complete Pipeline Flow</h1>
+        
+        <svg viewBox="0 0 1300 2200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <!-- Gradients -->
+                <linearGradient id="blueGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#4299e1;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#3182ce;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="greenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#48bb78;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#38a169;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="redGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#f56565;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#e53e3e;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="yellowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ecc94b;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#d69e2e;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#9f7aea;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#805ad5;stop-opacity:1" />
+                </linearGradient>
+                
+                <!-- Arrow marker -->
+                <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                    <polygon points="0 0, 10 3, 0 6" fill="#4a5568" />
+                </marker>
+            </defs>
+            
+            <!-- Title -->
+            <rect x="0" y="0" width="1300" height="80" fill="url(#blueGrad)" rx="8"/>
+            <text x="650" y="50" font-size="32" font-weight="bold" fill="white" text-anchor="middle">
+                Analysis Pipeline Flow
+            </text>
+            
+            <!-- Entry Point -->
+            <rect x="450" y="100" width="400" height="70" fill="url(#purpleGrad)" rx="8" stroke="#553c9a" stroke-width="2"/>
+            <text x="650" y="130" font-size="18" font-weight="bold" fill="white" text-anchor="middle">CLI Entry Point</text>
+            <text x="650" y="155" font-size="14" fill="white" text-anchor="middle">dist/cli.js</text>
+            
+            <!-- Arrow down -->
+            <line x1="650" y1="170" x2="650" y2="210" stroke="#4a5568" stroke-width="3" marker-end="url(#arrowhead)"/>
+            
+            <!-- Main Analyzer Orchestrator -->
+            <rect x="400" y="210" width="500" height="90" fill="#2d3748" rx="8" stroke="#1a202c" stroke-width="2"/>
+            <text x="650" y="245" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Analyzer Orchestrator</text>
+            <text x="650" y="270" font-size="14" fill="#cbd5e0" text-anchor="middle">src/analyzer.js</text>
+            <text x="650" y="290" font-size="13" fill="#a0aec0" text-anchor="middle">Coordinates all analysis modules</text>
+            
+            <!-- Split into 4 analyzers -->
+            <line x1="650" y1="300" x2="650" y2="340" stroke="#4a5568" stroke-width="3"/>
+            <line x1="200" y1="340" x2="1100" y2="340" stroke="#4a5568" stroke-width="3"/>
+            
+            <!-- Dependency Analyzer Branch -->
+            <line x1="200" y1="340" x2="200" y2="380" stroke="#4a5568" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <rect x="50" y="380" width="300" height="280" fill="#fef5e7" rx="8" stroke="#f39c12" stroke-width="2"/>
+            <rect x="50" y="380" width="300" height="50" fill="url(#yellowGrad)" rx="8"/>
+            <text x="200" y="410" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Dependency Analyzer</text>
+            
+            <!-- Dependency tools -->
+            <g transform="translate(70, 450)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#f39c12"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">🔧 npm outdated --json</text>
+            </g>
+            <g transform="translate(70, 495)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#f39c12"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">🔍 Circular dependency detection</text>
+            </g>
+            <g transform="translate(70, 540)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#f39c12"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">📦 Unused package detection</text>
+            </g>
+            <g transform="translate(70, 585)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#f39c12"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">📊 Version analysis</text>
+            </g>
+            <text x="200" y="650" font-size="12" fill="#666" text-anchor="middle" font-style="italic">Score: 0-100</text>
+            
+            <!-- Security Analyzer Branch -->
+            <line x1="450" y1="340" x2="450" y2="380" stroke="#4a5568" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <rect x="360" y="380" width="300" height="340" fill="#ffebee" rx="8" stroke="#e53e3e" stroke-width="2"/>
+            <rect x="360" y="380" width="300" height="50" fill="url(#redGrad)" rx="8"/>
+            <text x="510" y="410" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Security Analyzer</text>
+            
+            <!-- Security tools -->
+            <g transform="translate(380, 450)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#e53e3e"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">🔐 npm audit --json</text>
+            </g>
+            <g transform="translate(380, 495)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#e53e3e"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">🔑 Secret pattern scanning</text>
+            </g>
+            <g transform="translate(380, 540)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#e53e3e"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">⚠️ Insecure pattern detection</text>
+            </g>
+            <g transform="translate(380, 585)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#e53e3e"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">🛡️ eslint-plugin-security</text>
+            </g>
+            <g transform="translate(380, 630)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#e53e3e"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">🔍 Regex: API keys, passwords</text>
+            </g>
+            <text x="510" y="710" font-size="12" fill="#666" text-anchor="middle" font-style="italic">Score: 0-100</text>
+            
+            <!-- Quality Analyzer Branch -->
+            <line x1="700" y1="340" x2="700" y2="380" stroke="#4a5568" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <rect x="680" y="380" width="300" height="340" fill="#e6f7ff" rx="8" stroke="#3182ce" stroke-width="2"/>
+            <rect x="680" y="380" width="300" height="50" fill="url(#blueGrad)" rx="8"/>
+            <text x="830" y="410" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Quality Analyzer</text>
+            
+            <!-- Quality tools -->
+            <g transform="translate(700, 450)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#3182ce"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">📐 Complexity calculation</text>
+            </g>
+            <g transform="translate(700, 495)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#3182ce"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">🧪 Test coverage estimation</text>
+            </g>
+            <g transform="translate(700, 540)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#3182ce"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">✓ ESLint execution</text>
+            </g>
+            <g transform="translate(700, 585)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#3182ce"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">👃 Code smell detection</text>
+            </g>
+            <g transform="translate(700, 630)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#3182ce"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">📏 File size analysis</text>
+            </g>
+            <text x="830" y="710" font-size="12" fill="#666" text-anchor="middle" font-style="italic">Score: 0-100</text>
+            
+            <!-- Performance Analyzer Branch -->
+            <line x1="950" y1="340" x2="950" y2="380" stroke="#4a5568" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <rect x="990" y="380" width="300" height="340" fill="#f0fff4" rx="8" stroke="#38a169" stroke-width="2"/>
+            <rect x="990" y="380" width="300" height="50" fill="url(#greenGrad)" rx="8"/>
+            <text x="1140" y="410" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Performance Analyzer</text>
+            
+            <!-- Performance tools -->
+            <g transform="translate(1010, 450)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#38a169"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">📦 Bundle size analysis</text>
+            </g>
+            <g transform="translate(1010, 495)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#38a169"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">⚡ Async pattern checking</text>
+            </g>
+            <g transform="translate(1010, 540)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#38a169"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">💾 Memory leak detection</text>
+            </g>
+            <g transform="translate(1010, 585)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#38a169"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">🔄 Blocking operation scan</text>
+            </g>
+            <g transform="translate(1010, 630)">
+                <rect width="260" height="35" fill="white" rx="4" stroke="#38a169"/>
+                <text x="10" y="23" font-size="14" fill="#2d3748">📊 Dependency weight</text>
+            </g>
+            <text x="1140" y="710" font-size="12" fill="#666" text-anchor="middle" font-style="italic">Score: 0-100</text>
+            
+            <!-- Converge back -->
+            <line x1="200" y1="740" x2="200" y2="780" stroke="#4a5568" stroke-width="3"/>
+            <line x1="510" y1="740" x2="510" y2="780" stroke="#4a5568" stroke-width="3"/>
+            <line x1="830" y1="740" x2="830" y2="780" stroke="#4a5568" stroke-width="3"/>
+            <line x1="950" y1="740" x2="950" y2="780" stroke="#4a5568" stroke-width="3"/>
+            <line x1="200" y1="780" x2="1100" y2="780" stroke="#4a5568" stroke-width="3"/>
+            <line x1="650" y1="780" x2="650" y2="820" stroke="#4a5568" stroke-width="3" marker-end="url(#arrowhead)"/>
+            
+            <!-- Score Calculation -->
+            <rect x="450" y="820" width="400" height="100" fill="#2d3748" rx="8" stroke="#1a202c" stroke-width="2"/>
+            <text x="650" y="855" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Score Aggregation</text>
+            <text x="650" y="880" font-size="14" fill="#cbd5e0" text-anchor="middle">Weighted Average Calculation</text>
+            <text x="650" y="905" font-size="12" fill="#a0aec0" text-anchor="middle">Security: 30% | Dependencies: 25% | Quality: 25% | Performance: 20%</text>
+            
+            <line x1="650" y1="920" x2="650" y2="960" stroke="#4a5568" stroke-width="3" marker-end="url(#arrowhead)"/>
+            
+            <!-- Recommendation Engine -->
+            <rect x="400" y="960" width="500" height="90" fill="url(#purpleGrad)" rx="8" stroke="#553c9a" stroke-width="2"/>
+            <text x="650" y="995" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Recommendation Engine</text>
+            <text x="650" y="1020" font-size="14" fill="white" text-anchor="middle">Priority-based actionable insights</text>
+            <text x="650" y="1040" font-size="12" fill="#e9d5ff" text-anchor="middle">Critical → High → Medium → Low</text>
+            
+            <line x1="650" y1="1050" x2="650" y2="1090" stroke="#4a5568" stroke-width="3" marker-end="url(#arrowhead)"/>
+            
+            <!-- Report Generation Split -->
+            <rect x="350" y="1090" width="600" height="60" fill="#2d3748" rx="8" stroke="#1a202c" stroke-width="2"/>
+            <text x="650" y="1130" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Report Generator</text>
+            
+            <line x1="650" y1="1150" x2="650" y2="1190" stroke="#4a5568" stroke-width="3"/>
+            <line x1="400" y1="1190" x2="900" y2="1190" stroke="#4a5568" stroke-width="3"/>
+            
+            <!-- Console Report -->
+            <line x1="450" y1="1190" x2="450" y2="1230" stroke="#4a5568" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <rect x="250" y="1230" width="400" height="280" fill="#f7fafc" rx="8" stroke="#4a5568" stroke-width="2"/>
+            <rect x="250" y="1230" width="400" height="50" fill="#4a5568" rx="8"/>
+            <text x="450" y="1265" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Console Output</text>
+            
+            <g transform="translate(270, 1300)">
+                <text x="0" y="0" font-size="12" fill="#2d3748" font-family="monospace">╔══════════════════════════════╗</text>
+                <text x="0" y="20" font-size="12" fill="#2d3748" font-family="monospace">║  Analysis Report             ║</text>
+                <text x="0" y="40" font-size="12" fill="#2d3748" font-family="monospace">╚══════════════════════════════╝</text>
+                <text x="0" y="70" font-size="12" fill="#38a169" font-weight="bold">Overall Score: 85/100</text>
+                <text x="0" y="95" font-size="11" fill="#4a5568">────────────────────────────────</text>
+                <text x="0" y="115" font-size="11" fill="#2d3748">Dependencies: 90 ✓</text>
+                <text x="0" y="135" font-size="11" fill="#2d3748">Security: 85 ✓</text>
+                <text x="0" y="155" font-size="11" fill="#2d3748">Quality: 80 ✓</text>
+                <text x="0" y="175" font-size="11" fill="#2d3748">Performance: 85 ✓</text>
+            </g>
+            
+            <!-- JSON Report -->
+            <line x1="750" y1="1190" x2="750" y2="1230" stroke="#4a5568" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <rect x="680" y="1230" width="400" height="280" fill="#fffbeb" rx="8" stroke="#d69e2e" stroke-width="2"/>
+            <rect x="680" y="1230" width="400" height="50" fill="url(#yellowGrad)" rx="8"/>
+            <text x="880" y="1265" font-size="18" font-weight="bold" fill="white" text-anchor="middle">JSON Report File</text>
+            
+            <g transform="translate(700, 1300)">
+                <text x="0" y="0" font-size="11" fill="#2d3748" font-family="monospace">{</text>
+                <text x="10" y="20" font-size="11" fill="#2d3748" font-family="monospace">"overallScore": 85,</text>
+                <text x="10" y="40" font-size="11" fill="#2d3748" font-family="monospace">"timestamp": "2024-...",</text>
+                <text x="10" y="60" font-size="11" fill="#2d3748" font-family="monospace">"dependencies": {...},</text>
+                <text x="10" y="80" font-size="11" fill="#2d3748" font-family="monospace">"security": {...},</text>
+                <text x="10" y="100" font-size="11" fill="#2d3748" font-family="monospace">"quality": {...},</text>
+                <text x="10" y="120" font-size="11" fill="#2d3748" font-family="monospace">"performance": {...},</text>
+                <text x="10" y="140" font-size="11" fill="#2d3748" font-family="monospace">"recommendations": [...]</text>
+                <text x="0" y="160" font-size="11" fill="#2d3748" font-family="monospace">}</text>
+            </g>
+            
+            <!-- Exit Code Decision -->
+            <line x1="450" y1="1510" x2="450" y2="1550" stroke="#4a5568" stroke-width="3"/>
+            <line x1="880" y1="1510" x2="880" y2="1550" stroke="#4a5568" stroke-width="3"/>
+            <line x1="450" y1="1550" x2="880" y2="1550" stroke="#4a5568" stroke-width="3"/>
+            <line x1="665" y1="1550" x2="665" y2="1590" stroke="#4a5568" stroke-width="3" marker-end="url(#arrowhead)"/>
+            
+            <rect x="465" y="1590" width="400" height="90" fill="#fef5e7" rx="8" stroke="#f39c12" stroke-width="2"/>
+            <text x="665" y="1625" font-size="18" font-weight="bold" fill="#2d3748" text-anchor="middle">Score vs Threshold</text>
+            <text x="665" y="1655" font-size="14" fill="#666" text-anchor="middle">score >= threshold ?</text>
+            
+            <!-- Success path -->
+            <line x1="465" y1="1635" x2="300" y2="1635" stroke="#38a169" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <rect x="50" y="1600" width="200" height="70" fill="url(#greenGrad)" rx="8" stroke="#2f855a" stroke-width="2"/>
+            <text x="150" y="1630" font-size="16" font-weight="bold" fill="white" text-anchor="middle">✓ Pass</text>
+            <text x="150" y="1655" font-size="13" fill="white" text-anchor="middle">Exit code: 0</text>
+            
+            <!-- Failure path -->
+            <line x1="865" y1="1635" x2="1030" y2="1635" stroke="#e53e3e" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <rect x="1050" y="1600" width="200" height="70" fill="url(#redGrad)" rx="8" stroke="#c53030" stroke-width="2"/>
+            <text x="1150" y="1630" font-size="16" font-weight="bold" fill="white" text-anchor="middle">✗ Fail</text>
+            <text x="1150" y="1655" font-size="13" fill="white" text-anchor="middle">Exit code: 1</text>
+            
+            <!-- CI/CD Integration -->
+            <rect x="400" y="1740" width="500" height="100" fill="#2c5282" rx="8" stroke="#2a4365" stroke-width="2"/>
+            <text x="650" y="1775" font-size="20" font-weight="bold" fill="white" text-anchor="middle">🔄 CI/CD Integration</text>
+            <text x="650" y="1805" font-size="14" fill="#bee3f8" text-anchor="middle">Use as quality gate in pipeline</text>
+            <text x="650" y="1828" font-size="12" fill="#90cdf4" text-anchor="middle">GitHub Actions • GitLab CI • Jenkins • CircleCI</text>
+            
+            <!-- Tools Legend -->
+            <rect x="50" y="1900" width="1200" height="260" fill="#f7fafc" rx="8" stroke="#cbd5e0" stroke-width="2"/>
+            <text x="650" y="1935" font-size="22" font-weight="bold" fill="#2d3748" text-anchor="middle">External Tools & Libraries Used</text>
+            
+            <g transform="translate(80, 1960)">
+                <!-- Column 1 -->
+                <text x="0" y="0" font-size="14" font-weight="bold" fill="#2d3748">Core Tools:</text>
+                <text x="0" y="25" font-size="12" fill="#4a5568">• npm audit (vulnerability scanning)</text>
+                <text x="0" y="45" font-size="12" fill="#4a5568">• npm outdated (version checking)</text>
+                <text x="0" y="65" font-size="12" fill="#4a5568">• ESLint (code linting)</text>
+                <text x="0" y="85" font-size="12" fill="#4a5568">• glob (file pattern matching)</text>
+                <text x="0" y="105" font-size="12" fill="#4a5568">• fs-extra (file operations)</text>
+                
+                <!-- Column 2 -->
+                <text x="320" y="0" font-size="14" font-weight="bold" fill="#2d3748">Analysis Libraries:</text>
+                <text x="320" y="25" font-size="12" fill="#4a5568">• complexity-report (cyclomatic)</text>
+                <text x="320" y="45" font-size="12" fill="#4a5568">• madge (dependency graphs)</text>
+                <text x="320" y="65" font-size="12" fill="#4a5568">• eslint-plugin-security</text>
+                <text x="320" y="85" font-size="12" fill="#4a5568">• Regex patterns (custom)</text>
+                
+                <!-- Column 3 -->
+                <text x="640" y="0" font-size="14" font-weight="bold" fill="#2d3748">UI/Output:</text>
+                <text x="640" y="25" font-size="12" fill="#4a5568">• chalk (colored terminal)</text>
+                <text x="640" y="45" font-size="12" fill="#4a5568">• ora (spinners)</text>
+                <text x="640" y="65" font-size="12" fill="#4a5568">• table (formatted tables)</text>
+                <text x="640" y="85" font-size="12" fill="#4a5568">• commander (CLI parsing)</text>
+                
+                <!-- Column 4 -->
+                <text x="920" y="0" font-size="14" font-weight="bold" fill="#2d3748">Node.js Built-ins:</text>
+                <text x="920" y="25" font-size="12" fill="#4a5568">• child_process (exec commands)</text>
+                <text x="920" y="45" font-size="12" fill="#4a5568">• fs (file system)</text>
+                <text x="920" y="65" font-size="12" fill="#4a5568">• path (path operations)</text>
+            </g>
+        </svg>
+        
+        <div class="legend">
+            <h3>Pipeline Components Legend</h3>
+            <div class="legend-item">
+                <span class="legend-box" style="background: linear-gradient(135deg, #f39c12, #e67e22);"></span>
+                <span>Dependency Analysis</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-box" style="background: linear-gradient(135deg, #f56565, #e53e3e);"></span>
+                <span>Security Analysis</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-box" style="background: linear-gradient(135deg, #4299e1, #3182ce);"></span>
+                <span>Quality Analysis</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-box" style="background: linear-gradient(135deg, #48bb78, #38a169);"></span>
+                <span>Performance Analysis</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-box" style="background: linear-gradient(135deg, #9f7aea, #805ad5);"></span>
+                <span>Core System</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-box" style="background: #2d3748;"></span>
+                <span>Processing/Logic</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

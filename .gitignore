@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+analysis-report.json
+PROJECT_STRUCTURE.md
+
+docs/
